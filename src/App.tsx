@@ -73,6 +73,16 @@ const App = () => (
             <Route path="/portal/billing" element={<PortalRoute><PortalBilling /></PortalRoute>} />
             <Route path="/portal/settings" element={<PortalRoute><PortalSettings /></PortalRoute>} />
 
+
+            {/* Admin routes */}
+            <Route path="/admin" element={<AdminRoute><AdminOverview /></AdminRoute>} />
+            <Route path="/admin/clients" element={<AdminRoute><AdminClients /></AdminRoute>} />
+            <Route path="/admin/projects" element={<AdminRoute><AdminProjects /></AdminRoute>} />
+            <Route path="/admin/messages" element={<AdminRoute><AdminMessages /></AdminRoute>} />
+            <Route path="/admin/finance" element={<AdminRoute><AdminFinance /></AdminRoute>} />
+            <Route path="/admin/team" element={<AdminRoute><AdminTeam /></AdminRoute>} />
+            <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
