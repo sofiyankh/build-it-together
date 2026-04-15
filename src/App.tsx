@@ -22,6 +22,15 @@ import PortalDeployments from "./pages/portal/PortalDeployments";
 import PortalSupport from "./pages/portal/PortalSupport";
 import PortalBilling from "./pages/portal/PortalBilling";
 import PortalSettings from "./pages/portal/PortalSettings";
+import { AdminGuard } from "./components/admin/AdminGuard";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminClients from "./pages/admin/AdminClients";
+import AdminProjects from "./pages/admin/AdminProjects";
+import AdminMessages from "./pages/admin/AdminMessages";
+import AdminFinance from "./pages/admin/AdminFinance";
+import AdminTeam from "./pages/admin/AdminTeam";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +38,12 @@ const PortalRoute = ({ children }: { children: React.ReactNode }) => (
   <ProtectedRoute>
     <PortalLayout>{children}</PortalLayout>
   </ProtectedRoute>
+);
+
+const AdminRoute = ({ children }: { children: React.ReactNode }) => (
+  <AdminGuard>
+    <AdminLayout>{children}</AdminLayout>
+  </AdminGuard>
 );
 
 const App = () => (
