@@ -10,6 +10,9 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
+import PortfolioPage from "./pages/PortfolioPage";
 import PortalLayout from "./components/portal/PortalLayout";
 import PortalDashboard from "./pages/portal/PortalDashboard";
 import PortalProjects from "./pages/portal/PortalProjects";
@@ -19,6 +22,15 @@ import PortalDeployments from "./pages/portal/PortalDeployments";
 import PortalSupport from "./pages/portal/PortalSupport";
 import PortalBilling from "./pages/portal/PortalBilling";
 import PortalSettings from "./pages/portal/PortalSettings";
+import { AdminGuard } from "./components/admin/AdminGuard";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminClients from "./pages/admin/AdminClients";
+import AdminProjects from "./pages/admin/AdminProjects";
+import AdminMessages from "./pages/admin/AdminMessages";
+import AdminFinance from "./pages/admin/AdminFinance";
+import AdminTeam from "./pages/admin/AdminTeam";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +38,12 @@ const PortalRoute = ({ children }: { children: React.ReactNode }) => (
   <ProtectedRoute>
     <PortalLayout>{children}</PortalLayout>
   </ProtectedRoute>
+);
+
+const AdminRoute = ({ children }: { children: React.ReactNode }) => (
+  <AdminGuard>
+    <AdminLayout>{children}</AdminLayout>
+  </AdminGuard>
 );
 
 const App = () => (
@@ -41,6 +59,9 @@ const App = () => (
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
 
             {/* Portal routes */}
             <Route path="/portal" element={<PortalRoute><PortalDashboard /></PortalRoute>} />
@@ -51,6 +72,16 @@ const App = () => (
             <Route path="/portal/support" element={<PortalRoute><PortalSupport /></PortalRoute>} />
             <Route path="/portal/billing" element={<PortalRoute><PortalBilling /></PortalRoute>} />
             <Route path="/portal/settings" element={<PortalRoute><PortalSettings /></PortalRoute>} />
+
+
+            {/* Admin routes */}
+            <Route path="/admin" element={<AdminRoute><AdminOverview /></AdminRoute>} />
+            <Route path="/admin/clients" element={<AdminRoute><AdminClients /></AdminRoute>} />
+            <Route path="/admin/projects" element={<AdminRoute><AdminProjects /></AdminRoute>} />
+            <Route path="/admin/messages" element={<AdminRoute><AdminMessages /></AdminRoute>} />
+            <Route path="/admin/finance" element={<AdminRoute><AdminFinance /></AdminRoute>} />
+            <Route path="/admin/team" element={<AdminRoute><AdminTeam /></AdminRoute>} />
+            <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

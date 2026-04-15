@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const navLinks = [
   { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "#portfolio" },
+  { label: "Portfolio", href: "/portfolio" },
   { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "#about" },
+  { label: "About", href: "/about" },
 ];
 
 const Navbar = () => {
@@ -20,6 +21,23 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const renderLink = (link: { label: string; href: string }, className: string, onClick?: () => void) => {
+    if (link.href.startsWith("#")) {
+      return (
+        <a key={link.label} href={link.href} onClick={onClick} className={className}>
+          {link.label}
+          <span className="absolute bottom-0 left-0 w-0 h-px bg-accent-cyan group-hover:w-full transition-all duration-200" />
+        </a>
+      );
+    }
+    return (
+      <Link key={link.label} to={link.href} onClick={onClick} className={className}>
+        {link.label}
+        <span className="absolute bottom-0 left-0 w-0 h-px bg-accent-cyan group-hover:w-full transition-all duration-200" />
+      </Link>
+    );
+  };
+
   return (
     <motion.nav
       initial={{ y: -80 }}
@@ -30,39 +48,28 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between">
-        {/* Logo */}
-        <a href="/" className="flex items-center gap-1">
-          <span className="font-display text-xl font-bold text-foreground tracking-tight">
-            STUDIO
-          </span>
+        <Link to="/" className="flex items-center gap-1">
+          <span className="font-display text-xl font-bold text-foreground tracking-tight">STUDIO</span>
           <span className="w-2 h-2 rounded-full bg-accent" />
-        </a>
+        </Link>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="font-body text-sm font-medium text-text-secondary hover:text-foreground transition-colors relative group"
-            >
-              {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-accent-cyan group-hover:w-full transition-all duration-200" />
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            renderLink(link, "font-body text-sm font-medium text-text-secondary hover:text-foreground transition-colors relative group")
+          )}
         </div>
 
-        {/* CTAs */}
         <div className="hidden md:flex items-center gap-4">
-          <a href="#" className="font-body text-sm text-text-secondary hover:text-accent-blue transition-colors">
+          <Link to="/login" className="font-body text-sm text-text-secondary hover:text-accent-blue transition-colors">
             Client Login
-          </a>
-          <Button className="btn-glow font-body text-sm font-medium transition-all duration-150">
-            Start a Project
-          </Button>
+          </Link>
+          <Link to="/contact">
+            <Button className="btn-glow font-body text-sm font-medium transition-all duration-150">
+              Start a Project
+            </Button>
+          </Link>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           className="md:hidden text-foreground"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -72,7 +79,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile overlay */}
       {mobileOpen && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -80,17 +86,15 @@ const Navbar = () => {
           className="fixed inset-0 top-16 bg-background/95 backdrop-blur-xl md:hidden z-40"
         >
           <div className="flex flex-col items-center gap-8 pt-16">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="font-body text-lg text-text-secondary hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-            <Button className="btn-glow font-body mt-4">Start a Project</Button>
+            {navLinks.map((link) =>
+              renderLink(link, "font-body text-lg text-text-secondary hover:text-foreground transition-colors", () => setMobileOpen(false))
+            )}
+            <Link to="/login" onClick={() => setMobileOpen(false)} className="font-body text-lg text-text-secondary hover:text-foreground transition-colors">
+              Client Login
+            </Link>
+            <Link to="/contact" onClick={() => setMobileOpen(false)}>
+              <Button className="btn-glow font-body mt-4">Start a Project</Button>
+            </Link>
           </div>
         </motion.div>
       )}
