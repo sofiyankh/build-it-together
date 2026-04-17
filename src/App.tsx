@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AuthProvider, ProtectedRoute } from "@/contexts/AuthContext";
+import { AuthProvider, ProtectedRoute } from "@/modules/auth";
+import { NotificationsProvider } from "@/modules/notifications";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
@@ -31,6 +32,7 @@ import AdminMessages from "./pages/admin/AdminMessages";
 import AdminFinance from "./pages/admin/AdminFinance";
 import AdminTeam from "./pages/admin/AdminTeam";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminAuditLog from "./pages/admin/AdminAuditLog";
 
 const queryClient = new QueryClient();
 
@@ -53,7 +55,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
+          <NotificationsProvider>
+            <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
@@ -82,9 +85,11 @@ const App = () => (
             <Route path="/admin/finance" element={<AdminRoute><AdminFinance /></AdminRoute>} />
             <Route path="/admin/team" element={<AdminRoute><AdminTeam /></AdminRoute>} />
             <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
+            <Route path="/admin/audit" element={<AdminRoute><AdminAuditLog /></AdminRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </NotificationsProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
