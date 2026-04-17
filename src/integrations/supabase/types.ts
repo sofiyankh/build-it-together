@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_audit_log: {
+        Row: {
+          action: string
+          actor_id: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          metadata: Json
+          target_resource: string | null
+          target_user_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          target_resource?: string | null
+          target_user_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          target_resource?: string | null
+          target_user_id?: string | null
+        }
+        Relationships: []
+      }
       clients: {
         Row: {
           company_name: string | null
@@ -200,6 +233,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          metadata: Json
+          read_at: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          metadata?: Json
+          read_at?: string | null
+          title: string
+          type?: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          metadata?: Json
+          read_at?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["notification_type"]
+          user_id?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -408,12 +477,34 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_notification: {
+        Args: {
+          _body?: string
+          _link?: string
+          _metadata?: Json
+          _title: string
+          _type: Database["public"]["Enums"]["notification_type"]
+          _user_id: string
+        }
+        Returns: string
+      }
+      custom_access_token_hook: { Args: { event: Json }; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      log_admin_action: {
+        Args: {
+          _action: string
+          _ip?: string
+          _metadata?: Json
+          _target_resource?: string
+          _target_user_id?: string
+        }
+        Returns: string
       }
     }
     Enums: {
@@ -422,6 +513,14 @@ export type Database = {
       deploy_env: "staging" | "production"
       deploy_status: "live" | "archived" | "rollback"
       invoice_status: "draft" | "pending" | "paid" | "overdue" | "cancelled"
+      notification_type:
+        | "message"
+        | "project_update"
+        | "invoice"
+        | "ticket"
+        | "deployment"
+        | "system"
+        | "admin_action"
       priority_level: "low" | "medium" | "high" | "urgent"
       project_status:
         | "planning"
@@ -579,6 +678,15 @@ export const Constants = {
       deploy_env: ["staging", "production"],
       deploy_status: ["live", "archived", "rollback"],
       invoice_status: ["draft", "pending", "paid", "overdue", "cancelled"],
+      notification_type: [
+        "message",
+        "project_update",
+        "invoice",
+        "ticket",
+        "deployment",
+        "system",
+        "admin_action",
+      ],
       priority_level: ["low", "medium", "high", "urgent"],
       project_status: [
         "planning",

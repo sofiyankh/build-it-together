@@ -1,11 +1,12 @@
 import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/modules/auth";
+import { NotificationBell } from "@/modules/notifications";
 import {
   LayoutGrid, FolderOpen, MessageCircle, Paperclip,
-  Rocket, LifeBuoy, Receipt, Settings, LogOut, ChevronLeft, Bell,
+  Rocket, LifeBuoy, Receipt, Settings, LogOut, ChevronLeft,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
 
 const navItems = [
   { label: "Dashboard", icon: LayoutGrid, path: "/portal" },
@@ -119,14 +120,12 @@ const PortalLayout = ({ children }: { children: ReactNode }) => {
             {navItems.find((n) => isActive(n.path))?.label || "Dashboard"}
           </div>
           <div className="flex items-center gap-4">
-            <button className="relative text-text-secondary hover:text-foreground transition-colors" aria-label="Notifications">
-              <Bell size={18} />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-destructive rounded-full border-2 border-background" />
-            </button>
+            <NotificationBell />
             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-body font-bold text-foreground">
               {user?.email?.charAt(0).toUpperCase()}
             </div>
           </div>
+
         </header>
 
         {/* Content */}
