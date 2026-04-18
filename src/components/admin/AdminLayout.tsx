@@ -4,7 +4,7 @@ import { useAuth } from "@/modules/auth";
 import { NotificationBell } from "@/modules/notifications";
 import {
   Activity, Users, FolderKanban, MessagesSquare, Receipt, ShieldAlert,
-  Settings, LogOut, ChevronLeft, Terminal, Radio,
+  Settings, LogOut, ChevronLeft, Terminal, Radio, LifeBuoy, Rocket,
 } from "lucide-react";
 
 const navItems = [
@@ -12,6 +12,8 @@ const navItems = [
   { label: "Clients", icon: Users, path: "/admin/clients", group: "OPERATIONS" },
   { label: "Projects", icon: FolderKanban, path: "/admin/projects", group: "OPERATIONS" },
   { label: "Messages", icon: MessagesSquare, path: "/admin/messages", group: "OPERATIONS" },
+  { label: "Tickets", icon: LifeBuoy, path: "/admin/tickets", group: "OPERATIONS" },
+  { label: "Deployments", icon: Rocket, path: "/admin/deployments", group: "OPERATIONS" },
   { label: "Finance", icon: Receipt, path: "/admin/finance", group: "BUSINESS" },
   { label: "Team", icon: Users, path: "/admin/team", group: "BUSINESS" },
   { label: "Audit Log", icon: ShieldAlert, path: "/admin/audit", group: "SECURITY" },
