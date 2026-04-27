@@ -1,9 +1,12 @@
-import { corsHeaders, json, logAdminAction, requireAdmin } from "../_shared/auth-guard.ts";
+import { corsHeaders, enforceRateLimit, json, logAdminAction, requireAdmin } from "../_shared/auth-guard.ts";
 
 type Action = "suspend" | "reactivate" | "reset_password" | "change_email";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+
+  const limited = enforceRateLimit(req, { scope: "admin-update-user", limit: 20, windowMs: 60_000 });
+  if (limited) return limited;
 
   const ctx = await requireAdmin(req);
   if (ctx instanceof Response) return ctx;
