@@ -1,0 +1,85 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "search": "Search",
+    "send": "Send",
+    "close": "Close",
+    "submit": "Submit"
+  },
+  "nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "clientLogin": "Client Login",
+    "startProject": "Start a Project"
+  },
+  "footer": {
+    "tagline": "Premium software development for European startups and enterprises.",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "displayName": "Display Name",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset password",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?"
+  },
+  "portal": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "messages": "Messages",
+    "files": "Files",
+    "deployments": "Deployments",
+    "support": "Support",
+    "billing": "Billing",
+    "settings": "Settings",
+    "welcome": "Welcome back"
+  },
+  "admin": {
+    "commandCenter": "Command Center",
+    "clients": "Clients",
+    "projects": "Projects",
+    "messages": "Messages",
+    "tickets": "Tickets",
+    "deployments": "Deployments",
+    "finance": "Finance",
+    "team": "Team",
+    "auditLog": "Audit Log",
+    "settings": "Settings",
+    "createUser": "Create user",
+    "suspend": "Suspend",
+    "reactivate": "Reactivate"
+  },
+  "cookies": {
+    "title": "We respect your privacy",
+    "body": "We use cookies to improve your experience and measure traffic. See our",
+    "privacyPolicy": "Privacy Policy",
+    "accept": "Accept all",
+    "reject": "Reject"
+  },
+  "settings": {
+    "profile": "Profile",
+    "twoFactor": "Two-Factor Authentication",
+    "twoFactorDesc": "Protect your account with a TOTP code from an authenticator app.",
+    "enable2FA": "Enable 2FA",
+    "disable": "Disable",
+    "enabled": "2FA enabled",
+    "dangerZone": "Danger Zone",
+    "deleteAccount": "Request Account Deletion"
+  }
+}
