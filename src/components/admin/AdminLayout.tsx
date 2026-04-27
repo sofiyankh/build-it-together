@@ -1,30 +1,36 @@
 import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/modules/auth";
 import { NotificationBell } from "@/modules/notifications";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import {
   Activity, Users, FolderKanban, MessagesSquare, Receipt, ShieldAlert,
   Settings, LogOut, ChevronLeft, Terminal, Radio, LifeBuoy, Rocket,
 } from "lucide-react";
 
-const navItems = [
-  { label: "Command Center", icon: Activity, path: "/admin", group: "OPERATIONS" },
-  { label: "Clients", icon: Users, path: "/admin/clients", group: "OPERATIONS" },
-  { label: "Projects", icon: FolderKanban, path: "/admin/projects", group: "OPERATIONS" },
-  { label: "Messages", icon: MessagesSquare, path: "/admin/messages", group: "OPERATIONS" },
-  { label: "Tickets", icon: LifeBuoy, path: "/admin/tickets", group: "OPERATIONS" },
-  { label: "Deployments", icon: Rocket, path: "/admin/deployments", group: "OPERATIONS" },
-  { label: "Finance", icon: Receipt, path: "/admin/finance", group: "BUSINESS" },
-  { label: "Team", icon: Users, path: "/admin/team", group: "BUSINESS" },
-  { label: "Audit Log", icon: ShieldAlert, path: "/admin/audit", group: "SECURITY" },
-  { label: "Settings", icon: Settings, path: "/admin/settings", group: "SECURITY" },
-];
+const useNavItems = () => {
+  const { t } = useTranslation();
+  return [
+    { label: t("admin.commandCenter"), icon: Activity, path: "/admin", group: "OPERATIONS" },
+    { label: t("admin.clients"), icon: Users, path: "/admin/clients", group: "OPERATIONS" },
+    { label: t("admin.projects"), icon: FolderKanban, path: "/admin/projects", group: "OPERATIONS" },
+    { label: t("admin.messages"), icon: MessagesSquare, path: "/admin/messages", group: "OPERATIONS" },
+    { label: t("admin.tickets"), icon: LifeBuoy, path: "/admin/tickets", group: "OPERATIONS" },
+    { label: t("admin.deployments"), icon: Rocket, path: "/admin/deployments", group: "OPERATIONS" },
+    { label: t("admin.finance"), icon: Receipt, path: "/admin/finance", group: "BUSINESS" },
+    { label: t("admin.team"), icon: Users, path: "/admin/team", group: "BUSINESS" },
+    { label: t("admin.auditLog"), icon: ShieldAlert, path: "/admin/audit", group: "SECURITY" },
+    { label: t("admin.settings"), icon: Settings, path: "/admin/settings", group: "SECURITY" },
+  ];
+};
 
 const groups = ["OPERATIONS", "BUSINESS", "SECURITY"];
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
   const { user, signOut, role } = useAuth();
   const location = useLocation();
+  const navItems = useNavItems();
   const [collapsed, setCollapsed] = useState(false);
 
   const isActive = (path: string) =>
@@ -123,6 +129,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             </span>
           </div>
           <div className="flex items-center gap-4">
+            <LanguageToggle variant="compact" />
             <NotificationBell />
             <Link to="/portal" className="font-mono text-[10px] text-accent-cyan hover:text-accent-blue transition-colors uppercase tracking-widest">
               ↗ Client Portal

@@ -1,0 +1,85 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "back": "Retour",
+    "search": "Rechercher",
+    "send": "Envoyer",
+    "close": "Fermer",
+    "submit": "Soumettre"
+  },
+  "nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "pricing": "Tarifs",
+    "about": "À propos",
+    "contact": "Contact",
+    "clientLogin": "Espace client",
+    "startProject": "Démarrer un projet"
+  },
+  "footer": {
+    "tagline": "Développement logiciel premium pour startups et entreprises européennes.",
+    "rights": "Tous droits réservés.",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation"
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "signOut": "Se déconnecter",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "displayName": "Nom affiché",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Déjà un compte ?"
+  },
+  "portal": {
+    "dashboard": "Tableau de bord",
+    "projects": "Projets",
+    "messages": "Messages",
+    "files": "Fichiers",
+    "deployments": "Déploiements",
+    "support": "Support",
+    "billing": "Facturation",
+    "settings": "Paramètres",
+    "welcome": "Bienvenue"
+  },
+  "admin": {
+    "commandCenter": "Centre de commande",
+    "clients": "Clients",
+    "projects": "Projets",
+    "messages": "Messages",
+    "tickets": "Tickets",
+    "deployments": "Déploiements",
+    "finance": "Finance",
+    "team": "Équipe",
+    "auditLog": "Journal d'audit",
+    "settings": "Paramètres",
+    "createUser": "Créer un utilisateur",
+    "suspend": "Suspendre",
+    "reactivate": "Réactiver"
+  },
+  "cookies": {
+    "title": "Nous respectons votre vie privée",
+    "body": "Nous utilisons des cookies pour améliorer votre expérience et mesurer le trafic. Consultez notre",
+    "privacyPolicy": "Politique de confidentialité",
+    "accept": "Tout accepter",
+    "reject": "Refuser"
+  },
+  "settings": {
+    "profile": "Profil",
+    "twoFactor": "Authentification à deux facteurs",
+    "twoFactorDesc": "Protégez votre compte avec un code TOTP depuis une application d'authentification.",
+    "enable2FA": "Activer la 2FA",
+    "disable": "Désactiver",
+    "enabled": "2FA activée",
+    "dangerZone": "Zone dangereuse",
+    "deleteAccount": "Demander la suppression du compte"
+  }
+}
