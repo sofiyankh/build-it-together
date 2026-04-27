@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Cookie, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -9,6 +10,7 @@ const STORAGE_KEY = "studio.cookie-consent";
 type Consent = "accepted" | "rejected";
 
 export const CookieBanner = () => {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -40,10 +42,10 @@ export const CookieBanner = () => {
                 <Cookie size={16} className="text-accent-cyan" />
               </div>
               <div className="flex-1">
-                <p className="font-body text-sm font-semibold text-foreground mb-1">We respect your privacy</p>
+                <p className="font-body text-sm font-semibold text-foreground mb-1">{t("cookies.title")}</p>
                 <p className="font-body text-xs text-text-secondary leading-relaxed">
-                  We use cookies to improve your experience and measure traffic. See our{" "}
-                  <Link to="/privacy" className="text-accent-cyan hover:underline">Privacy Policy</Link>.
+                  {t("cookies.body")}{" "}
+                  <Link to="/privacy" className="text-accent-cyan hover:underline">{t("cookies.privacyPolicy")}</Link>.
                 </p>
               </div>
               <button onClick={() => decide("rejected")} className="text-text-muted hover:text-foreground" aria-label="Dismiss">
@@ -52,10 +54,10 @@ export const CookieBanner = () => {
             </div>
             <div className="mt-4 flex gap-2">
               <Button size="sm" variant="outline" className="flex-1 font-body text-xs" onClick={() => decide("rejected")}>
-                Reject
+                {t("cookies.reject")}
               </Button>
               <Button size="sm" className="flex-1 font-body text-xs" onClick={() => decide("accepted")}>
-                Accept all
+                {t("cookies.accept")}
               </Button>
             </div>
           </div>
