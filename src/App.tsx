@@ -35,6 +35,7 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import AdminAuditLog from "./pages/admin/AdminAuditLog";
 import AdminTickets from "./pages/admin/AdminTickets";
 import AdminDeployments from "./pages/admin/AdminDeployments";
+import CookieBanner from "./components/public/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -93,6 +94,7 @@ const App = () => (
 
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieBanner />
           </NotificationsProvider>
         </AuthProvider>
       </BrowserRouter>

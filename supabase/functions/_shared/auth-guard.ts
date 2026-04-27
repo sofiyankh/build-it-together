@@ -1,5 +1,6 @@
 // Shared admin auth guard for edge functions.
-// Implements the "JWT claim + DB fallback" verification chosen by the user.
+// Implements the "JWT claim + DB fallback" verification chosen by the user,
+// plus an in-memory token-bucket rate limiter applied per-caller.
 import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
@@ -10,7 +11,64 @@ const corsHeaders = {
 
 export { corsHeaders };
 
+// ---------------- Rate limiter (per-instance, best-effort) ----------------
+// Matches the spec's "rate limiting on auth-sensitive admin routes" without
+// requiring extra infrastructure. For production-grade global limits, swap in
+// Upstash/Redis behind the same `enforceRateLimit` API.
+type Bucket = { count: number; resetAt: number };
+const buckets = new Map<string, Bucket>();
+
+export interface RateLimitOptions {
+  /** Logical scope name, e.g. "admin-create-user" — keeps buckets isolated. */
+  scope: string;
+  /** Max requests per window. Defaults to 20. */
+  limit?: number;
+  /** Window length in ms. Defaults to 60_000 (1 minute). */
+  windowMs?: number;
+}
+
+export function enforceRateLimit(req: Request, opts: RateLimitOptions): Response | null {
+  const limit = opts.limit ?? 20;
+  const windowMs = opts.windowMs ?? 60_000;
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const key = `${opts.scope}:${ip}`;
+  const now = Date.now();
+  const existing = buckets.get(key);
+
+  if (!existing || existing.resetAt < now) {
+    buckets.set(key, { count: 1, resetAt: now + windowMs });
+    return null;
+  }
+
+  if (existing.count >= limit) {
+    const retryAfter = Math.ceil((existing.resetAt - now) / 1000);
+    return new Response(
+      JSON.stringify({ error: "Too many requests", retry_after_seconds: retryAfter }),
+      {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json", "Retry-After": String(retryAfter) },
+      },
+    );
+  }
+
+  existing.count += 1;
+  return null;
+}
+
 export interface AdminContext {
+  userId: string;
+  email: string | null;
+  userClient: SupabaseClient; // RLS-scoped to caller
+  serviceClient: SupabaseClient; // bypasses RLS — use carefully
+  ip: string | null;
+}
+
+export async function requireAdmin(req: Request): Promise<AdminContext | Response> {
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader?.startsWith("Bearer ")) {
+    return json({ error: "Missing Authorization header" }, 401);
+  }
+  const token = authHeader.replace("Bearer ", "");
   userId: string;
   email: string | null;
   userClient: SupabaseClient; // RLS-scoped to caller
