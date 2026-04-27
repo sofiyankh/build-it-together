@@ -1,29 +1,35 @@
 import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/modules/auth";
 import { NotificationBell } from "@/modules/notifications";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import {
   LayoutGrid, FolderOpen, MessageCircle, Paperclip,
   Rocket, LifeBuoy, Receipt, Settings, LogOut, ChevronLeft,
 } from "lucide-react";
 
 
-const navItems = [
-  { label: "Dashboard", icon: LayoutGrid, path: "/portal" },
-  { label: "My Projects", icon: FolderOpen, path: "/portal/projects" },
-  { label: "Messages", icon: MessageCircle, path: "/portal/messages", badge: 3 },
-  { label: "Files", icon: Paperclip, path: "/portal/files" },
-  { label: "Deployments", icon: Rocket, path: "/portal/deployments" },
-  { label: "Support", icon: LifeBuoy, path: "/portal/support", badge: 1 },
-  { label: "Invoices", icon: Receipt, path: "/portal/billing" },
-  { label: "Settings", icon: Settings, path: "/portal/settings" },
-];
+const useNavItems = () => {
+  const { t } = useTranslation();
+  return [
+    { label: t("portal.dashboard"), icon: LayoutGrid, path: "/portal" },
+    { label: t("portal.projects"), icon: FolderOpen, path: "/portal/projects" },
+    { label: t("portal.messages"), icon: MessageCircle, path: "/portal/messages", badge: 3 },
+    { label: t("portal.files"), icon: Paperclip, path: "/portal/files" },
+    { label: t("portal.deployments"), icon: Rocket, path: "/portal/deployments" },
+    { label: t("portal.support"), icon: LifeBuoy, path: "/portal/support", badge: 1 },
+    { label: t("portal.billing"), icon: Receipt, path: "/portal/billing" },
+    { label: t("portal.settings"), icon: Settings, path: "/portal/settings" },
+  ];
+};
 
 const PortalLayout = ({ children }: { children: ReactNode }) => {
   const { user, signOut } = useAuth();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
 
+  const navItems = useNavItems();
   const isActive = (path: string) =>
     path === "/portal"
       ? location.pathname === "/portal"
@@ -120,6 +126,7 @@ const PortalLayout = ({ children }: { children: ReactNode }) => {
             {navItems.find((n) => isActive(n.path))?.label || "Dashboard"}
           </div>
           <div className="flex items-center gap-4">
+            <LanguageToggle variant="compact" />
             <NotificationBell />
             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-body font-bold text-foreground">
               {user?.email?.charAt(0).toUpperCase()}
