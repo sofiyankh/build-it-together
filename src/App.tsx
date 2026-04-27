@@ -35,6 +35,7 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import AdminAuditLog from "./pages/admin/AdminAuditLog";
 import AdminTickets from "./pages/admin/AdminTickets";
 import AdminDeployments from "./pages/admin/AdminDeployments";
+import AdminClientDetail from "./pages/admin/AdminClientDetail";
 import CookieBanner from "./components/public/CookieBanner";
 
 const queryClient = new QueryClient();
@@ -83,6 +84,7 @@ const App = () => (
             {/* Admin routes */}
             <Route path="/admin" element={<AdminRoute><AdminOverview /></AdminRoute>} />
             <Route path="/admin/clients" element={<AdminRoute><AdminClients /></AdminRoute>} />
+            <Route path="/admin/clients/:id" element={<AdminRoute><AdminClientDetail /></AdminRoute>} />
             <Route path="/admin/projects" element={<AdminRoute><AdminProjects /></AdminRoute>} />
             <Route path="/admin/messages" element={<AdminRoute><AdminMessages /></AdminRoute>} />
             <Route path="/admin/finance" element={<AdminRoute><AdminFinance /></AdminRoute>} />

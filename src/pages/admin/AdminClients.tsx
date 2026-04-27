@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/modules/auth";
 import { Plus, MoreVertical, ShieldOff, ShieldCheck, KeyRound, Trash2, UserCog, Search } from "lucide-react";
@@ -247,7 +248,9 @@ const AdminClients = () => {
             {filtered.map((r) => (
               <tr key={r.client_id} className="border-b border-border last:border-0 hover:bg-secondary/30 transition-colors">
                 <td className="px-4 py-3">
-                  <div className="font-body text-sm text-foreground">{r.display_name || "—"}</div>
+                  <Link to={`/admin/clients/${r.client_id}`} className="font-body text-sm text-foreground hover:text-accent-cyan transition-colors">
+                    {r.display_name || "—"}
+                  </Link>
                 </td>
                 <td className="px-4 py-3">
                   <span className="font-mono text-[10px] uppercase tracking-wider text-accent-cyan">{r.role}</span>
