@@ -3,15 +3,22 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
-const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "/about" },
-];
+const useNavLinks = () => {
+  const { t } = useTranslation();
+  return [
+    { label: t("nav.services"), href: "#services" },
+    { label: t("nav.portfolio"), href: "/portfolio" },
+    { label: t("nav.pricing"), href: "#pricing" },
+    { label: t("nav.about"), href: "/about" },
+  ];
+};
 
 const Navbar = () => {
+  const { t } = useTranslation();
+  const navLinks = useNavLinks();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -60,12 +67,13 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
+          <LanguageToggle />
           <Link to="/login" className="font-body text-sm text-text-secondary hover:text-accent-blue transition-colors">
-            Client Login
+            {t("nav.clientLogin")}
           </Link>
           <Link to="/contact">
             <Button className="btn-glow font-body text-sm font-medium transition-all duration-150">
-              Start a Project
+              {t("nav.startProject")}
             </Button>
           </Link>
         </div>
@@ -90,10 +98,11 @@ const Navbar = () => {
               renderLink(link, "font-body text-lg text-text-secondary hover:text-foreground transition-colors", () => setMobileOpen(false))
             )}
             <Link to="/login" onClick={() => setMobileOpen(false)} className="font-body text-lg text-text-secondary hover:text-foreground transition-colors">
-              Client Login
+              {t("nav.clientLogin")}
             </Link>
+            <LanguageToggle />
             <Link to="/contact" onClick={() => setMobileOpen(false)}>
-              <Button className="btn-glow font-body mt-4">Start a Project</Button>
+              <Button className="btn-glow font-body mt-4">{t("nav.startProject")}</Button>
             </Link>
           </div>
         </motion.div>
